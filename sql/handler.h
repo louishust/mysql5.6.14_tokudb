@@ -392,6 +392,7 @@ enum legacy_db_type
   DB_TYPE_MARIA,
   /** Performance schema engine. */
   DB_TYPE_PERFORMANCE_SCHEMA,
+  DB_TYPE_TOKUDB=41,
   DB_TYPE_FIRST_DYNAMIC=42,
   DB_TYPE_DEFAULT=127 // Must be last
 };
@@ -400,7 +401,12 @@ enum row_type { ROW_TYPE_NOT_USED=-1, ROW_TYPE_DEFAULT, ROW_TYPE_FIXED,
 		ROW_TYPE_DYNAMIC, ROW_TYPE_COMPRESSED,
 		ROW_TYPE_REDUNDANT, ROW_TYPE_COMPACT,
                 /** Unused. Reserved for future versions. */
-                ROW_TYPE_PAGE };
+                ROW_TYPE_PAGE,
+                ROW_TYPE_TOKU_UNCOMPRESSED, ROW_TYPE_TOKU_ZLIB,
+                ROW_TYPE_TOKU_SNAPPY, ROW_TYPE_TOKU_QUICKLZ,
+                ROW_TYPE_TOKU_LZMA, ROW_TYPE_TOKU_FAST, ROW_TYPE_TOKU_SMALL
+
+};
 
 /* Specifies data storage format for individual columns */
 enum column_format_type {
@@ -1206,6 +1212,7 @@ public:
   // Partition operation with ALL keyword
   static const HA_ALTER_FLAGS ALTER_ALL_PARTITION        = 1L << 28;
 
+  static const HA_ALTER_FLAGS RECREATE_TABLE        = 1L << 29;
   /**
     Create options (like MAX_ROWS) for the new version of table.
 
